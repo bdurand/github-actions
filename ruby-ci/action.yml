@@ -20,8 +20,6 @@ inputs:
     description: "Run yard doc"
     required: false
     default: "false"
-env:
-  BUNDLE_PATH: vendor/bundle
 runs:
   using: "composite"
   steps:
@@ -47,11 +45,10 @@ runs:
         echo "BUNDLE_GEMFILE=$gemfile" >> "$GITHUB_ENV"
     - name: Install bundler
       shell: bash
-      run: bundle update
+      run: bundle install
       env:
         BUNDLE_JOBS: 3
         BUNDLE_RETRY: 3
-        BUNDLE_CLEAN: "true"
     - name: Run specs
       shell: bash
       run: bundle exec rake spec
