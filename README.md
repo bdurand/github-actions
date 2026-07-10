@@ -31,6 +31,8 @@ jobs:
           - ruby: "3.1"
             appraisal: "activerecord_7.0"
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
       - name: Ruby CI
         uses: bdurand/github-actions/ruby-ci@main
         with:
