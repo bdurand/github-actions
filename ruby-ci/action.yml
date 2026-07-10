@@ -20,10 +20,10 @@ inputs:
     description: "Run yard doc"
     required: false
     default: "false"
+env:
+  BUNDLE_PATH: vendor/bundle
 runs:
   using: "composite"
-  env:
-    BUNDLE_PATH: vendor/bundle
   steps:
     - name: Checkout
       uses: actions/checkout@v6
