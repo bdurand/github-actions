@@ -33,14 +33,17 @@ runs:
       run: |
         gem uninstall bundler --all
         gem install bundler --no-document --version ${{ inputs.bundler }}
-    - name: Set Appraisal bundle
+    - name: Set bundle gemfile
       if: inputs.appraisal != ''
       shell: bash
       run: |
         gemfile="gemfiles/${{ inputs.appraisal }}.gemfile"
         echo "using gemfile $gemfile"
-        sed -i '/^BUNDLED WITH$/,+1d' "$gemfile.lock"
         echo "BUNDLE_GEMFILE=$gemfile" >> "$GITHUB_ENV"
+    - name: Remove BUNDLED WITH from gemfile lock
+      shell: bash
+      run: |
+        sed -i '/^BUNDLED WITH$/,+1d' "${BUNDLE_GEMFILE}.lock"
     - name: Install bundler
       shell: bash
       run: bundle install
@@ -60,4 +63,3 @@ runs:
       if: inputs.yard == 'true'
       shell: bash
       run: bundle exec yard doc --fail-on-warning
-  
