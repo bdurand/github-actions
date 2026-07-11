@@ -43,7 +43,7 @@ runs:
     - name: Remove BUNDLED WITH from gemfile lock
       shell: bash
       run: |
-        sed -i '/^BUNDLED WITH$/,+1d' "${BUNDLE_GEMFILE}.lock"
+        sed -i '/^BUNDLED WITH$/,+1d' "${BUNDLE_GEMFILE:-Gemfile}.lock"
     - name: Install bundler
       shell: bash
       run: bundle install
