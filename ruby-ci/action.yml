@@ -60,6 +60,8 @@ runs:
         if [[ "$FROZEN_STRINGS" == "true" ]]; then
           export RUBYOPT="${RUBYOPT:+$RUBYOPT }--enable=frozen-string-literal --debug=frozen-string-literal"
         fi
+        echo "FROZEN_STRINGS=$FROZEN_STRINGS"
+        echo "RUBYOPT=$RUBYOPT"
         bundle exec rake spec
       env:
         FROZEN_STRINGS: ${{ inputs.frozen_strings }}
