@@ -20,6 +20,10 @@ inputs:
     description: "Run yard doc"
     required: false
     default: "false"
+  frozen_strings:
+    description: "Run specs with frozen string literal enabled"
+    required: false
+    default: "true"
 runs:
   using: "composite"
   steps:
@@ -52,9 +56,13 @@ runs:
         BUNDLE_RETRY: 3
     - name: Run specs
       shell: bash
-      run: bundle exec rake spec
+      run: |
+        if [[ "$FROZEN_STRINGS" == "true" ]]; then
+          export RUBYOPT="${RUBYOPT:+$RUBYOPT }--enable=frozen-string-literal --debug=frozen-string-literal"
+        fi
+        bundle exec rake spec
       env:
-        RUBYOPT: '--enable=frozen-string-literal --debug=frozen-string-literal'
+        FROZEN_STRINGS: ${{ inputs.frozen_strings }}
     - name: Run standardrb
       if: inputs.standardrb == 'true'
       shell: bash
